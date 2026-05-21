@@ -251,6 +251,10 @@ Pelanggan
 User
 </button>
 
+<button onclick="showPage('riwayat')">
+Riwayat
+</button>
+
 </div>
 
 </div>
@@ -469,33 +473,66 @@ Cetak Struk
 
 </div>
 
+<div id="riwayat" class="box">
+
+<h2>Riwayat Transaksi</h2>
+
+<br>
+
+<input
+id="searchRiwayat"
+placeholder="Cari pelanggan..."
+onkeyup="cariRiwayat()">
+
+<br><br>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Pelanggan</th>
+<th>Paket</th>
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody id="riwayatBody">
+
+</tbody>
+
+</table>
+
+</div>
+
 <script>
-
-function showPage(id){
-
-document
-.querySelectorAll(".box")
-.forEach(box=>{
-box.classList.remove("active");
-});
-
-document
-.getElementById(id)
-.classList.add("active");
-
-}
 
 let total=0;
 
+let transaksi=
+JSON.parse(
+localStorage.getItem(
+"transaksi"
+)
+)||[];
+
+loadData();
+
 function tambahTransaksi(){
 
-let nama=
-document.getElementById(
+let pelanggan=
+document
+.getElementById(
 "namaPelanggan"
 ).value;
 
 let paket=
-document.getElementById(
+document
+.getElementById(
 "paket"
 );
 
@@ -511,7 +548,8 @@ paket.selectedIndex
 
 let qty=
 Number(
-document.getElementById(
+document
+.getElementById(
 "jumlah"
 ).value
 );
@@ -519,31 +557,83 @@ document.getElementById(
 let subtotal=
 harga*qty;
 
-total+=subtotal;
+let item={
 
-document.getElementById(
-"grandTotal"
-).innerHTML=total;
+id:
+"TR"+
+Date.now(),
 
-let row=`
+pelanggan,
+
+paket:
+namaPaket,
+
+harga,
+
+qty,
+
+subtotal
+
+};
+
+transaksi.push(item);
+
+saveData();
+
+render();
+
+}
+
+function render(){
+
+let keranjang=
+document
+.getElementById(
+"keranjang"
+);
+
+keranjang.innerHTML="";
+
+total=0;
+
+transaksi.forEach(
+(item,index)=>{
+
+total+=item.subtotal;
+
+keranjang.innerHTML+=`
 
 <tr>
 
-<td>${nama}</td>
+<td>
+${item.pelanggan}
+</td>
 
-<td>${namaPaket}</td>
+<td>
+${item.paket}
+</td>
 
-<td>${harga}</td>
+<td>
+${item.harga}
+</td>
 
-<td>${qty}</td>
+<td>
+${item.qty}
+</td>
 
-<td>${subtotal}</td>
+<td>
+${item.subtotal}
+</td>
 
 <td>
 
-<button onclick="
-this.parentElement.parentElement.remove()
-">
+<button
+onclick=
+hapus(
+${index}
+)
+
+>
 
 Hapus
 
@@ -555,45 +645,145 @@ Hapus
 
 `;
 
+});
+
 document
 .getElementById(
-"keranjang"
+"grandTotal"
 )
-.innerHTML+=row;
+.innerHTML=total;
+
+renderRiwayat();
+
+updateDashboard();
+
+}
+
+function hapus(i){
+
+transaksi.splice(i,1);
+
+saveData();
+
+render();
+
+}
+
+function saveData(){
+
+localStorage.setItem(
+"transaksi",
+
+JSON.stringify(
+transaksi
+)
+
+);
+
+}
+
+function loadData(){
+
+render();
+
+}
+
+function renderRiwayat(){
+
+let body=
+document
+.getElementById(
+"riwayatBody"
+);
+
+body.innerHTML="";
+
+transaksi.forEach(
+item=>{
+
+body.innerHTML+=`
+
+<tr>
+
+<td>
+${item.id}
+</td>
+
+<td>
+${item.pelanggan}
+</td>
+
+<td>
+${item.paket}
+</td>
+
+<td>
+${item.subtotal}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+function cariRiwayat(){
+
+let key=
+document
+.getElementById(
+"searchRiwayat"
+)
+.value
+.toLowerCase();
+
+let rows=
+document
+.querySelectorAll(
+"#riwayatBody tr"
+);
+
+rows.forEach(
+r=>{
+
+r.style.display=
+
+r.innerText
+.toLowerCase()
+.includes(key)
+
+?
+
+""
+
+:
+
+"none";
+
+}
+
+);
+
+}
+
+function updateDashboard(){
+
+document
+.querySelectorAll(
+".card h1"
+)[0]
+
+.innerHTML=
+
+transaksi.length;
 
 }
 
 function cetakStruk(){
 
-document
-.getElementById(
-"struk"
-)
-.style.display="block";
-
-document
-.getElementById(
-"struk"
-)
-.innerHTML=`
-
-<h2>
-STRUK
-</h2>
-
-<hr>
-
-<p>
-Tanggal :
-${new Date()}
-</p>
-
-<p>
-Total :
-Rp ${total}
-</p>
-
-`;
+window.print();
 
 }
 </script>
