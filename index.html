@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Sistem Kasir Percetakan</title>
+<title>Sistem Kasir Coffee Shop</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,15 +13,38 @@
 
 *{
 margin:0;
+
 padding:0;
 box-sizing:border-box;
 font-family:Poppins,sans-serif;
 }
 
 body{
-background:#f5f7fb;
+
+background:
+linear-gradient(
+135deg,
+
+#f8f3ee,
+
+#e8d8c4,
+
+#d7c0ae,
+
+#c8aa8a
+
+);
+
 display:flex;
+
 min-height:100vh;
+
+overflow-x:hidden;
+
+position:relative;
+
+color:#334155;
+
 }
 
 /* SIDEBAR */
@@ -36,11 +59,31 @@ height:100%;
 overflow:auto;
 }
 
-.logo{
-font-size:24px;
-font-weight:700;
-color:#2563eb;
-margin-bottom:35px;
+.logo-print{
+
+display:flex;
+
+justify-content:center;
+
+margin-bottom:15px;
+
+}
+
+.logo-print img{
+
+width:80px;
+
+height:80px;
+
+object-fit:cover;
+
+border-radius:50%;
+
+box-shadow:
+0 10px 25px rgba(
+111,78,55,.3
+);
+
 }
 
 .menu{
@@ -219,22 +262,51 @@ display:none;
 
 .receipt{
 
-width:330px;
+width:360px;
 
 background:white;
 
-color:black;
-
-padding:20px;
+padding:28px;
 
 margin:40px auto;
 
-font-family:monospace;
-
-border-radius:10px;
+border-radius:20px;
 
 box-shadow:
-0 8px 30px rgba(0,0,0,.2);
+0 15px 40px rgba(
+0,0,0,.12
+);
+
+font-family:
+"Poppins",
+sans-serif;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.receipt::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:6px;
+
+background:
+linear-gradient(
+90deg,
+#2563eb,
+#7c3aed
+);
 
 }
 
@@ -353,7 +425,7 @@ box-shadow:none;
 <div class="sidebar">
 
 <div class="logo">
-PRINTKASIR
+☕ Coffee Moon Brew
 </div>
 
 <div class="menu">
@@ -389,9 +461,11 @@ Riwayat
 <div class="main">
 
 <div class="header">
-<h1>Sistem Kasir Percetakan</h1>
-<p>Dashboard percetakan modern</p>
-</div>
+<h1>Sistem Kasir Coffee Shop</h1>
+
+<p>
+Dashboard kasir modern coffee & beverage
+</p>
 
 <div id="dashboard" class="box active">
 
@@ -434,30 +508,40 @@ placeholder="Nama pelanggan">
 
 <select id="paket">
 
-<option value="">Pilih Paket</option>
-
-<option value="35000">
-Paket Skripsi Basic
+<option value="">
+Pilih Menu
 </option>
 
-<option value="75000">
-Paket Skripsi Premium
+<option value="18000">
+Espresso
+</option>
+
+<option value="22000">
+Cappuccino
 </option>
 
 <option value="25000">
-Paket Proposal
+Latte
 </option>
 
-<option value="10000">
-Paket Fotokopi
+<option value="28000">
+Caramel Macchiato
 </option>
 
-<option value="50000">
-Paket Banner
+<option value="20000">
+Americano
 </option>
 
-<option value="60000">
-Paket Wisuda
+<option value="30000">
+Matcha Latte
+</option>
+
+<option value="26000">
+Chocolate
+</option>
+
+<option value="15000">
+Croissant
 </option>
 
 </select>
@@ -508,91 +592,145 @@ Rp <span id="grandTotal">
 
 <br>
 
+<input
+type="number"
+id="uangBayar"
+placeholder="Uang bayar">
+
+<button onclick="hitungKembalian()">
+Hitung
+</button>
+
 <div class="receipt" id="receipt">
 
-<h2>HILAL PRINT</h2>
+<div class="receipt-top">
 
-<p>Jl. Percetakan Banjarnegara</p>
+<div class="logo-print">
 
-<p>Telp : 08xxxxxxxx</p>
-
-<hr>
-
-<div class="receipt-info">
-
-<p>Kasir : Admin</p>
-
-<p id="tanggal">
-21/05/2026
-</p>
+<img
+src="https://i.ibb.co.com/353Sw5Tg/Whats-App-Image-2026-05-22-at-19-47-49.jpg"
+width="80"
+>
 
 </div>
 
-<hr>
+<h2>
+COFFEE Moon Brew
+</h2>
+
+<p>
+
+Coffee • Dessert • Beverage
+
+</p>
+
+<p id="tanggal"></p>
+
+</div>
+
+<div class="receipt-line"></div>
+
+<div class="receipt-info">
+
+<div>
+Kasir :
+<b>hilal</b>
+</div>
+
+<div>
+Meja :
+<b>A03</b>
+</div>
+
+<div>
+No :
+<b>#TRX01</b>
+</div>
+
+</div>
+
+<div class="receipt-line"></div>
 
 <div id="item-list">
 
 <div class="item">
 
-<span>Banner A3 x1</span>
+<span>Cappuccino</span>
 
-<span>Rp15.000</span>
-
-</div>
+<span>Rp22.000</span>
 
 </div>
 
-<hr>
+</div>
+
+<div class="receipt-line"></div>
+
+<div class="total-box">
 
 <div class="total">
 
-<span>TOTAL</span>
+<span>Total</span>
 
 <span id="total">
-Rp15.000
+
+Rp0
+
 </span>
 
 </div>
 
 <div class="total">
 
-<span>BAYAR</span>
+<span>Bayar</span>
 
 <span id="bayar">
-Rp20.000
+
+Rp0
+
+</span>
+
+</div>
+
+<div class="total total-big">
+
+<span>Kembali</span>
+
+<span id="kembali">
+
+Rp0
+
 </span>
 
 </div>
 
 <div class="total">
 
-<span>KEMBALI</span>
+<span>Payment</span>
 
-<span id="kembali">
-Rp5.000
-</span>
+<span>QRIS</span>
 
 </div>
 
-<hr>
+</div>
+
+<div class="receipt-line"></div>
 
 <div class="thanks">
 
-Terima kasih telah berbelanja
+✨ Terima kasih ✨
+
+<br>
+
+Ga boleh lupa diri, apalagi lupa ngopi
 
 </div>
 
 </div>
-
-<button onclick="cetakStruk()">
-Cetak Struk
-</button>
 
 <button onclick="printReceipt()">
-
 Cetak Struk
-
 </button>
+
 <div id="struk">
 
 </div>
@@ -601,7 +739,7 @@ Cetak Struk
 
 <div id="paket" class="box">
 
-<h2>Daftar Paket Percetakan</h2>
+<h2>Daftar Menu Coffee</h2>
 
 <table>
 
@@ -611,13 +749,41 @@ Cetak Struk
 <th>Harga</th>
 </tr>
 
-<tr><td>PK001</td><td>Paket Skripsi Basic</td><td>35.000</td></tr>
-<tr><td>PK002</td><td>Paket Skripsi Premium</td><td>75.000</td></tr>
-<tr><td>PK003</td><td>Paket Proposal</td><td>25.000</td></tr>
-<tr><td>PK004</td><td>Paket Revisi</td><td>15.000</td></tr>
-<tr><td>PK005</td><td>Paket Fotokopi</td><td>10.000</td></tr>
-<tr><td>PK006</td><td>Paket Banner</td><td>50.000</td></tr>
-<tr><td>PK007</td><td>Paket Wisuda</td><td>60.000</td></tr>
+<tr>
+<td>CF001</td>
+<td>Espresso</td>
+<td>18.000</td>
+</tr>
+
+<tr>
+<td>CF002</td>
+<td>Cappuccino</td>
+<td>22.000</td>
+</tr>
+
+<tr>
+<td>CF003</td>
+<td>Latte</td>
+<td>25.000</td>
+</tr>
+
+<tr>
+<td>CF004</td>
+<td>Americano</td>
+<td>20.000</td>
+</tr>
+
+<tr>
+<td>CF005</td>
+<td>Matcha Latte</td>
+<td>30.000</td>
+</tr>
+
+<tr>
+<td>CF006</td>
+<td>Croissant</td>
+<td>15.000</td>
+</tr>
 
 </table>
 
@@ -637,14 +803,38 @@ Cetak Struk
 
 <tr>
 <td>PL001</td>
-<td>Ahmad</td>
+<td>Fauzi</td>
 <td>08123xxxxx</td>
 </tr>
 
 <tr>
 <td>PL002</td>
-<td>Wildan</td>
+<td>Hasbi</td>
 <td>08211xxxxx</td>
+</tr>
+
+<tr>
+<td>PL003</td>
+<td>pragos</td>
+<td>08518xxxxx</td>
+</tr>
+
+<tr>
+<td>PL004</td>
+<td>irfani</td>
+<td>08529xxxxx</td>
+</tr>
+
+<tr>
+<td>PL005</td>
+<td>Rifai</td>
+<td>08530xxxxx</td>
+</tr>
+
+<tr>
+<td>PL006</td>
+<td>Ngab</td>
+<td>08540xxxxx</td>
 </tr>
 
 </table>
@@ -665,19 +855,17 @@ Cetak Struk
 
 <tr>
 <td>USR01</td>
-<td>Admin</td>
+<td>Hilal</td>
 <td>Administrator</td>
 </tr>
 
 <tr>
 <td>USR02</td>
-<td>Kasir</td>
+<td>Bahri</td>
 <td>Operator</td>
 </tr>
 
 </table>
-
-</div>
 
 </div>
 
@@ -768,7 +956,7 @@ harga*qty;
 let item={
 
 id:
-"TR"+
+"TRX-"+
 Date.now(),
 
 pelanggan,
@@ -794,9 +982,8 @@ render();
 
 function render(){
 
-let keranjang=
-document
-.getElementById(
+let keranjang =
+document.getElementById(
 "keranjang"
 );
 
@@ -807,41 +994,60 @@ total=0;
 transaksi.forEach(
 (item,index)=>{
 
-total+=item.subtotal;
+total += item.subtotal;
 
-keranjang.innerHTML+=`
+let itemList =
+document.getElementById(
+"item-list"
+);
+
+itemList.innerHTML="";
+
+transaksi.forEach(item=>{
+
+itemList.innerHTML += `
+
+<div class="receipt-item">
+
+<div>
+
+${item.paket}
+
+<br>
+
+x${item.qty}
+
+</div>
+
+<div>
+
+Rp ${item.subtotal}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+keranjang.innerHTML += `
 
 <tr>
 
-<td>
-${item.pelanggan}
-</td>
+<td>${item.pelanggan}</td>
 
-<td>
-${item.paket}
-</td>
+<td>${item.paket}</td>
 
-<td>
-${item.harga}
-</td>
+<td>Rp ${item.harga}</td>
 
-<td>
-${item.qty}
-</td>
+<td>${item.qty}</td>
 
-<td>
-${item.subtotal}
-</td>
+<td>Rp ${item.subtotal}</td>
 
 <td>
 
-<button
-onclick=
-hapus(
-${index}
-)
-
->
+<button onclick="hapus(${index})">
 
 Hapus
 
@@ -855,15 +1061,19 @@ Hapus
 
 });
 
-document
-.getElementById(
+document.getElementById(
 "grandTotal"
-)
-.innerHTML=total;
+).innerHTML = total;
 
 renderRiwayat();
 
 updateDashboard();
+
+}
+
+function printReceipt(){
+
+window.print();
 
 }
 
@@ -880,6 +1090,7 @@ render();
 function saveData(){
 
 localStorage.setItem(
+
 "transaksi",
 
 JSON.stringify(
@@ -899,8 +1110,7 @@ render();
 function renderRiwayat(){
 
 let body=
-document
-.getElementById(
+document.getElementById(
 "riwayatBody"
 );
 
@@ -909,25 +1119,17 @@ body.innerHTML="";
 transaksi.forEach(
 item=>{
 
-body.innerHTML+=`
+body.innerHTML += `
 
 <tr>
 
-<td>
-${item.id}
-</td>
+<td>${item.id}</td>
 
-<td>
-${item.pelanggan}
-</td>
+<td>${item.pelanggan}</td>
 
-<td>
-${item.paket}
-</td>
+<td>${item.paket}</td>
 
-<td>
-${item.subtotal}
-</td>
+<td>Rp ${item.subtotal}</td>
 
 </tr>
 
@@ -937,49 +1139,9 @@ ${item.subtotal}
 
 }
 
-function cariRiwayat(){
-
-let key=
-document
-.getElementById(
-"searchRiwayat"
-)
-.value
-.toLowerCase();
-
-let rows=
-document
-.querySelectorAll(
-"#riwayatBody tr"
-);
-
-rows.forEach(
-r=>{
-
-r.style.display=
-
-r.innerText
-.toLowerCase()
-.includes(key)
-
-?
-
-""
-
-:
-
-"none";
-
-}
-
-);
-
-}
-
 function updateDashboard(){
 
-document
-.querySelectorAll(
+document.querySelectorAll(
 ".card h1"
 )[0]
 
@@ -989,18 +1151,124 @@ transaksi.length;
 
 }
 
-function cetakStruk(){
+function showPage(id){
 
-window.print();
+document
+.querySelectorAll(".box")
+.forEach(box=>{
+
+box.classList.remove(
+"active"
+);
+
+});
+
+document
+.getElementById(id)
+.classList.add(
+"active"
+);
 
 }
 
-function printReceipt(){
+// tampil tanggal
+document
+.getElementById(
+"tanggal"
+)
+.innerHTML=
 
-window.print();
+new Date()
+.toLocaleString(
+"id-ID"
+);
+
+// fungsi cari riwayat
+function cariRiwayat(){
+
+let keyword =
+document.getElementById(
+"searchRiwayat"
+)
+.value
+.toLowerCase();
+
+let rows =
+document.querySelectorAll(
+"#riwayatBody tr"
+);
+
+rows.forEach(row=>{
+
+row.style.display =
+
+row.innerText
+.toLowerCase()
+.includes(keyword)
+
+? ""
+
+: "none";
+
+});
+
+}
+
+
+// =========================
+// HITUNG KEMBALIAN
+// =========================
+
+function hitungKembalian(){
+
+let bayar = Number(
+
+document.getElementById(
+"uangBayar"
+).value
+
+);
+
+// validasi
+if(bayar < total){
+
+alert(
+"Uang tidak cukup!"
+);
+
+return;
+
+}
+
+// hitung kembali
+let kembali =
+bayar-total;
+
+
+// tampil total
+document.getElementById(
+"total"
+).innerHTML =
+
+"Rp " + total;
+
+
+// tampil bayar
+document.getElementById(
+"bayar"
+).innerHTML =
+
+"Rp " + bayar;
+
+
+// tampil kembali
+document.getElementById(
+"kembali"
+).innerHTML =
+
+"Rp " + kembali;
 
 }
 </script>
-
 </body>
 </html>
